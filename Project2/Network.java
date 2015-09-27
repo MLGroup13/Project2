@@ -16,12 +16,10 @@ public class Network
 	
 	public void setupInputNodes()
 	{
-		/* if there are no hidden nodes the number of weights 
-		of each input node is equal to the number of outputs */
+		float[] w = new float[outputN.length];
 		for(int i = 0; i < inputN.length; i++)
 		{
-			inputN[i] = new INode(inputVector[i]);
-			inputN[i].setWeight(outputN.length);
+			inputN[i] = new INode(inputVector[i], w);
 		}
 	}
 	
@@ -40,7 +38,7 @@ public class Network
 		System.out.println("Output Nodes");
 		for(int i = 0; i < inputN.length; i++)
 		{
-			System.out.print("N" + i + ": input= " + inputN[i].getInput() + " ");
+			System.out.print("Node" + i + ": input= " + inputN[i].getInput() + " ");
 		}
 	}
 }
