@@ -25,6 +25,15 @@ public class Network
 		}
 	}
 	
+	public void setupOutputNodes()
+	{
+		for(int i = 0; i < outputN.length; i++)
+		{
+			outputN[i] = new ONode();
+		}
+		
+	}
+	
 	int getINodes()
 	{
 		return inputN.length;

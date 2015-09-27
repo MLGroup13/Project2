@@ -5,13 +5,13 @@ public class INode
 	private float input;
 	private float[] weight;
 	
-	INode(float in)
+	public INode(float in)
 	{
 		input = in;
 	}
 	
 	// initialize the weights to a random real between 0.0 and 1.0
-	void setWeight(int w)
+	public void setWeight(int w)
 	{
 		weight = new float[w];
 		Random randomN = new Random();

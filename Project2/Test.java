@@ -22,11 +22,10 @@ public class Test {
 			inputVector[i] = input.nextFloat();
 		}
 		
-		// code to setup
+		// code to setup a a new Network 
 		Network network = new Network(iNodes, inputVector, oNodes);
 		network.setupInputNodes();
-		//System.out.println(network.getINodes());
-		//System.out.println(network.getONodes());
+		network.setupOutputNodes();
 		network.printNetwork();
 		
 		//RandomDist distribution = new RandomDist(5);
