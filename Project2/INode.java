@@ -1,18 +1,25 @@
+import java.util.Random;
 
 public class INode 
 {
 	private float input;
 	private float[] weight;
 	
-	INode(float in, float[] w)
+	INode(float in)
 	{
 		input = in;
-		weight = w;
 	}
 	
-	void setWeight(float[] w)
+	// initialize the weights to a random real between 0.0 and 1.0
+	void setWeight(int w)
 	{
-		
+		weight = new float[w];
+		Random randomN = new Random();
+		for(int i = 0; i < w; i++)
+		{
+			weight[i] = randomN.nextFloat();
+			System.out.print("w" + i + "=" + weight[i]);
+		}
 	}
 	
 	public float getInput()

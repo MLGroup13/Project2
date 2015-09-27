@@ -18,7 +18,7 @@ public class Test {
 		float[] inputVector = new float[iNodes];
 		for (int i = 0; i < iNodes; i++)
 		{
-			System.out.println("enter vector" + i);
+			System.out.print("enter vector" + i);
 			inputVector[i] = input.nextFloat();
 		}
 		
