@@ -1,17 +1,18 @@
 
 public class INode 
 {
-	float input;
-	float[] weight;
+	private float input;
+	private float[] weight;
 	
 	INode()
 	{
 		
 	}
 	
-	void setInput(float in)
+	
+	public void setInput(float in)
 	{
-		this.input = in;
+		input = in;
 	}
 	
 	void setWeight()
@@ -19,8 +20,8 @@ public class INode
 		
 	}
 	
-	float getInput()
+	public float getInput()
 	{
-		return this.input;
+		return input;
 	}
 }

@@ -2,9 +2,9 @@ import java.util.*;
 
 public class RandomDist 
 {
-	float[] ranDist;
-	float min;
-	float max;
+	private float[] ranDist;
+	private float min;
+	private float max;
 	
 	RandomDist(int size)
 	{

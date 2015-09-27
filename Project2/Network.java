@@ -1,12 +1,12 @@
 
 public class Network 
 {	
-	float[] inputVector;
-	INode[] inputN;
-	ONode[] outputN;
-	RandomDist ranDist;
+	private float[] inputVector;
+	private INode[] inputN;
+	private ONode[] outputN;
+	private RandomDist ranDist;
 	
-	Network(int in, float[] inv, int out)
+	public Network(int in, float[] inv, int out)
 	{
 		inputN = new INode[in];
 		inputVector = inv;
@@ -14,12 +14,12 @@ public class Network
 		ranDist = new RandomDist(in);
 	}
 	
-	void setInput()
+	public void setInput()
 	{
 		for(int i = 0; i < inputN.length; i++)
 		{
 			System.out.println(inputVector[i]);
-			inputN[i].setInput(inputVector[i]);
+			//inputN[i].setInput(0.0f);
 		}
 	}
 	

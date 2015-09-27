@@ -26,12 +26,12 @@ public class Test {
 		
 		Network network = new Network(iNodes, inputVector, oNodes);
 		network.setInput();
-		System.out.println(network.getINodes());
-		System.out.println(network.getONodes());
-		network.printNetwork();
+		//System.out.println(network.getINodes());
+		//System.out.println(network.getONodes());
+		//network.printNetwork();
 		
-		RandomDist distribution = new RandomDist(5);
-		distribution.printDist();
+		//RandomDist distribution = new RandomDist(5);
+		//distribution.printDist();
 		
 		input.close();
 	}

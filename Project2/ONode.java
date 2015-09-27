@@ -1,6 +1,6 @@
 
 public class ONode 
 {
-	float[] weight;
-	float output;
+	private float[] weight;
+	private float output;
 }
