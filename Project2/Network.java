@@ -4,22 +4,22 @@ public class Network
 	private float[] inputVector;
 	private INode[] inputN;
 	private ONode[] outputN;
-	private RandomDist ranDist;
+	//private RandomDist ranDist;
 	
 	public Network(int in, float[] inv, int out)
 	{
 		inputN = new INode[in];
 		inputVector = inv;
 		outputN = new ONode[out];
-		ranDist = new RandomDist(in);
+		//ranDist = new RandomDist(in);
 	}
 	
-	public void setInput()
+	public void setupInputNodes()
 	{
+		float[] w = new float[outputN.length];
 		for(int i = 0; i < inputN.length; i++)
 		{
-			System.out.println(inputVector[i]);
-			//inputN[i].setInput(0.0f);
+			inputN[i] = new INode(inputVector[i], w);
 		}
 	}
 	
@@ -38,7 +38,7 @@ public class Network
 		System.out.println("Output Nodes");
 		for(int i = 0; i < inputN.length; i++)
 		{
-			System.out.print("Node" + i + ": input= " + inputN[i].getInput());
+			System.out.print("Node" + i + ": input= " + inputN[i].getInput() + " ");
 		}
 	}
 }

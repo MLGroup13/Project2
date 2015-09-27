@@ -4,18 +4,13 @@ public class INode
 	private float input;
 	private float[] weight;
 	
-	INode()
-	{
-		
-	}
-	
-	
-	public void setInput(float in)
+	INode(float in, float[] w)
 	{
 		input = in;
+		weight = w;
 	}
 	
-	void setWeight()
+	void setWeight(float[] w)
 	{
 		
 	}
