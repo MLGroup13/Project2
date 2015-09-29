@@ -24,8 +24,7 @@ public class Test {
 		
 		// code to setup a a new Network 
 		Network network = new Network(iNodes, inputVector, oNodes);
-		network.setupInputNodes();
-		network.setupOutputNodes();
+		network.setupNetwork();
 		network.printNetwork();
 		
 		//RandomDist distribution = new RandomDist(5);

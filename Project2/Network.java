@@ -3,6 +3,7 @@ public class Network
 {	
 	private float[] inputVector;
 	private INode[] inputN;
+	private HNode[] layer1, layer2;
 	private ONode[] outputN;
 	//private RandomDist ranDist;
 	
@@ -11,10 +12,15 @@ public class Network
 		inputN = new INode[in];
 		inputVector = inv;
 		outputN = new ONode[out];
-		//ranDist = new RandomDist(in);
 	}
 	
-	public void setupInputNodes()
+	public void setupNetwork()
+	{
+		setupInputNodes();
+		setupOutputNodes();
+	}
+	
+	private void setupInputNodes()
 	{
 		/* if there are no hidden nodes the number of weights 
 		of each input node is equal to the number of outputs */
@@ -25,12 +31,29 @@ public class Network
 		}
 	}
 	
-	public void setupOutputNodes()
+	private void setupHiddenNodes()
+	{
+		
+	}
+	
+	private void setupOutputNodes()
 	{
 		for(int i = 0; i < outputN.length; i++)
 		{
 			outputN[i] = new ONode();
+			calcAct(inputN, outputN[i]);
 		}
+		
+	}
+	
+	// calcAct used when
+	private void calcAct(INode[] preLayer, ONode curLayer)
+	{
+		
+	}
+	
+	private void calcAct(HNode[] preLayer, ONode[] curLayer)
+	{
 		
 	}
 	
@@ -52,4 +75,6 @@ public class Network
 			System.out.print("N" + i + ": input= " + inputN[i].getInput() + " ");
 		}
 	}
+	
+	
 }
