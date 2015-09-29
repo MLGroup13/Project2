@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Network 
 {	
@@ -48,7 +49,7 @@ public class Network
 		for(int i = 0; i < inputN.length; i++)
 		{
 			inputN[i] = new INode(inputVector[i]);
-			inputN[i].setWeight(outputN.length);
+			inputN[i].initWeight(outputN.length);
 		}
 	}
 	
@@ -63,12 +64,12 @@ public class Network
 		for(int i = 0; i < outputN.length; i++)
 		{
 			outputN[i] = new ONode();
+			outputN[i].initBias();
 			calcAct(inputN, outputN[i]);
-		}
-		
+		}	
 	}
 	
-	// calcAct used when
+	// calcAct used when there are no hidden layers
 	private void calcAct(INode[] preLayer, ONode curNode)
 	{
 		
@@ -78,7 +79,7 @@ public class Network
 			float [] w = preLayer[i].getWeight();
 			for(int j = 0; j < w.length; j++)
 			{
-				curNode.setOutput(tanhActivate(preLayer[i].getInput()*w[j]));
+				curNode.setOutput(tanhActivate(preLayer[i].getInput()*w[j] + curNode.getBias()));
 			}
 		}
 	}
@@ -109,7 +110,8 @@ public class Network
 		System.out.println("Output Nodes");
 		for(int i = 0; i < outputN.length; i++)
 		{
-			System.out.print("O" + i + ": output= " + outputN[i].getOutput() + " ");
+			System.out.print("O" + i + ": " + "bias= " + outputN[i].getBias() +
+				"output= " + outputN[i].getOutput() + " ");
 		}
 	}
 	
