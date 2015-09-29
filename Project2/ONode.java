@@ -13,6 +13,11 @@ public class ONode
 		output = out;
 	}
 	
+	public float getOutput()
+	{
+		return output;
+	}
+	
 	public void calcOutput()
 	{
 		

@@ -14,6 +14,27 @@ public class Network
 		outputN = new ONode[out];
 	}
 	
+
+	/** Shane wrote original, James adjusted input parameter 
+	 *	An activation function using a sigmoid function. 
+	 *
+	 */
+	public float sigActivate(float x){
+		float e = (float) Math.E;
+        float t = (float) Math.pow(e, -x);
+        float activate = 1 / (1 + t);
+		return activate;
+	}
+
+	
+	/** Shane wrote original, James adjusted input parameter
+	 *  An activation function using a hyperbolic tangent.
+	 */
+	public float tanhActivate(float x){
+        float activate = (float) Math.tanh(x);
+        return activate;
+    }
+	
 	public void setupNetwork()
 	{
 		setupInputNodes();
@@ -38,6 +59,7 @@ public class Network
 	
 	private void setupOutputNodes()
 	{
+		// case for neural net with no hidden layers
 		for(int i = 0; i < outputN.length; i++)
 		{
 			outputN[i] = new ONode();
@@ -47,9 +69,18 @@ public class Network
 	}
 	
 	// calcAct used when
-	private void calcAct(INode[] preLayer, ONode curLayer)
+	private void calcAct(INode[] preLayer, ONode curNode)
 	{
 		
+		
+		for (int i = 0; i < preLayer.length; i++)
+		{
+			float [] w = preLayer[i].getWeight();
+			for(int j = 0; j < w.length; j++)
+			{
+				curNode.setOutput(tanhActivate(preLayer[i].getInput()*w[j]));
+			}
+		}
 	}
 	
 	private void calcAct(HNode[] preLayer, ONode[] curLayer)
@@ -69,10 +100,16 @@ public class Network
 	
 	void printNetwork()
 	{
-		System.out.println("Output Nodes");
+		System.out.println("Input Nodes");
 		for(int i = 0; i < inputN.length; i++)
 		{
 			System.out.print("N" + i + ": input= " + inputN[i].getInput() + " ");
+		}
+		
+		System.out.println("Output Nodes");
+		for(int i = 0; i < outputN.length; i++)
+		{
+			System.out.print("O" + i + ": output= " + outputN[i].getOutput() + " ");
 		}
 	}
 	

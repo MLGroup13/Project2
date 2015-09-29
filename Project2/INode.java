@@ -22,6 +22,11 @@ public class INode
 		}
 	}
 	
+	public float[] getWeight()
+	{
+		return weight;
+	}
+	
 	public float getInput()
 	{
 		return input;
