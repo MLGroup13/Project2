@@ -26,7 +26,15 @@ public class Network
         float activate = 1 / (1 + t);
 		return activate;
 	}
-
+	
+	// sigmoid derivative 
+	public float sigDerive(float x)
+	{
+		float e = (float) Math.E;
+		float numerator = (float) Math.pow(e, x);
+		float denomenator = (float) Math.pow(1 + Math.pow(e, -x), 2);
+		return numerator / denomenator;
+	}
 	
 	/** Shane wrote original, James adjusted input parameter
 	 *  An activation function using a hyperbolic tangent.
@@ -35,6 +43,21 @@ public class Network
         float activate = (float) Math.tanh(x);
         return activate;
     }
+	
+	// hyperbolic tangent derivative 
+	public float tanhDeriv(float x)
+	{
+		return x;
+	}
+	
+	// squared error used to compare network output o(x) to actual y from Rosenbrock function 
+	public float sqError(float o, float y)
+	{
+		float err;
+		err = (float) (0.5f*(y - Math.pow(o, 2)));
+		
+		return err;
+	}
 	
 	public void setupNetwork()
 	{
