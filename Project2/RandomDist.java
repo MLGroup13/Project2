@@ -17,12 +17,16 @@ public class RandomDist
 	private float[][] getDist()
 	{
 		Random randomN = new Random();
-		
-		/*for (int i = 0; i < ranDist.length; i++)
+		for (int i = 0; i < ranDist.length; i++)
 		{
-			ranDist[i] =  (randomN.nextFloat() - randomN.nextFloat())*5.0f;
-			
-		}*/
+			for (int j = 0; j <= dimension; j++)
+			{
+				ranDist[i][j] =  (randomN.nextFloat() - randomN.nextFloat())*3.0f;
+			}
+			ranDist[i][dimension] = (float)  (Math.pow((1 - ranDist[i][0]), 2) + 
+					100*(Math.pow((ranDist[i][1] - Math.pow(ranDist[i][0], 2) ), 2) )
+					);
+		}
 		
 		return ranDist;
 	}
@@ -32,7 +36,11 @@ public class RandomDist
 	{
 		for (int i = 0; i < ranDist.length; i++)
 		{
-			System.out.println(ranDist[i]);
+			for (int j = 0; j < dimension+1; j++)
+			{
+				System.out.print(ranDist[i][j] + " ");
+			}
+			System.out.println();
 		}
 	}
 	
