@@ -7,7 +7,7 @@ public class Test {
 		// create Scanner instance input prompt user for arguments 
 		Scanner input = new Scanner(System.in);
 		
-		int iNodes;
+		/*int iNodes;
 		System.out.println("# of input nodes?");
 		iNodes = input.nextInt();
 		
@@ -25,10 +25,9 @@ public class Test {
 		// code to setup a a new Network 
 		Network network = new Network(iNodes, inputVector, oNodes);
 		network.setupNetwork();
-		network.printNetwork();
+		network.printNetwork();*/
 		
-		//RandomDist distribution = new RandomDist(5);
-		//distribution.printDist();
+		
 		
 		input.close();
 	}
