@@ -20,6 +20,8 @@ public class SampleGenerator {
 		
 		RandomDist distribution = new RandomDist(sample_size, dimension);
 		distribution.printDist();
+		
+		input.close();
 	}
 
 }

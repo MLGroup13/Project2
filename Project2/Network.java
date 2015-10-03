@@ -2,17 +2,29 @@ import java.util.Random;
 
 public class Network 
 {	
+	
 	private float[] inputVector;
 	private INode[] inputN;
+	private int HLayers;
 	private HNode[] layer1, layer2;
 	private ONode[] outputN;
+	private float bias = 1;
 	//private RandomDist ranDist;
 	
-	public Network(int in, float[] inv, int out)
+	public Network(int in, int hLayers, int [] hNodes, float[] inv, int out)
 	{
 		inputN = new INode[in];
+		HLayers = hLayers;
 		inputVector = inv;
 		outputN = new ONode[out];
+		if (hLayers == 1)
+		{
+			layer1 = new HNode[hNodes[0]];
+		}
+		else if (hLayers == 2)
+		{
+			layer2 = new HNode[hNodes[1]];
+		}
 	}
 	
 
@@ -62,57 +74,128 @@ public class Network
 	public void setupNetwork()
 	{
 		setupInputNodes();
+		if (HLayers > 0)
+		{
+			setupHiddenNodes();
+		}
 		setupOutputNodes();
 	}
 	
 	private void setupInputNodes()
 	{
-		float[] w = new float[outputN.length];
-		for(int i = 0; i < inputN.length; i++)
+		/* if there are no hidden nodes the number of weights 
+		of each input node is equal to the number of outputs */
+		if (HLayers == 0)
 		{
-<<<<<<< HEAD
-			inputN[i] = new INode(inputVector[i], w);
-=======
-			inputN[i] = new INode(inputVector[i]);
-			inputN[i].initWeight(outputN.length);
->>>>>>> James_Branch
+			for(int i = 0; i < inputN.length; i++)
+			{
+				inputN[i] = new INode(inputVector[i]);
+				inputN[i].initWeight(outputN.length);
+			}
+		}
+		
+		/* if there are hidden nodes the number of weights
+		of each input node is equal to the number of hidden 
+		nodes in the first hidden layer */
+		else if (HLayers > 0)
+		{
+			for(int i = 0; i < inputN.length; i++)
+			{
+				inputN[i] = new INode(inputVector[i]);
+				inputN[i].initWeight(layer1.length);
+			}
 		}
 	}
 	
 	private void setupHiddenNodes()
 	{
-		
+		for (int i = 0; i < HLayers; i++)
+		{
+			// if the first hidden layer is selected
+			if(i == 0)
+			{
+				for (int j = 0; j < layer1.length; j++)
+				{
+					/* if there is a single hidden layer the number of weights
+					of each hidden node in the first hidden layer is equal to
+					the number of outputs */
+					if (HLayers == 1)
+					{
+						layer1[j] = new HNode();
+						layer1[j].initWeight(outputN.length);
+						calcAct(inputN, layer1[j]);
+					}
+				}
+			}
+		}
 	}
 	
 	private void setupOutputNodes()
 	{
 		// case for neural net with no hidden layers
-		for(int i = 0; i < outputN.length; i++)
+		if (HLayers == 0)
 		{
-			outputN[i] = new ONode();
-			outputN[i].initBias();
-			calcAct(inputN, outputN[i]);
-		}	
+			for(int i = 0; i < outputN.length; i++)
+			{
+				outputN[i] = new ONode();
+				calcAct(inputN, outputN[i]);
+			}
+		}
+		
+		// case for neural net with a single layer
+		else if (HLayers == 1)
+		{
+			for(int i = 0; i < outputN.length; i++)
+			{
+				outputN[i] = new ONode();
+				calcAct(layer1, outputN[i]);
+			}
+		}
+		
+		// case for neural net with two hidden layers
+		else if (HLayers == 2)
+		{
+			
+		}
 	}
 	
-	// calcAct used when there are no hidden layers
+	// calcAct used by output nodes when there are no hidden layers
 	private void calcAct(INode[] preLayer, ONode curNode)
 	{
-		
-		
 		for (int i = 0; i < preLayer.length; i++)
 		{
 			float [] w = preLayer[i].getWeight();
 			for(int j = 0; j < w.length; j++)
 			{
-				curNode.setOutput(tanhActivate(preLayer[i].getInput()*w[j] + curNode.getBias()));
+				curNode.setOutput(sigActivate(preLayer[i].getInput()*w[j] + bias));
 			}
 		}
 	}
 	
-	private void calcAct(HNode[] preLayer, ONode[] curLayer)
+	// calcAct used by output nodes when there are one or more hidden layers
+	private void calcAct(HNode[] preLayer, ONode curNode)
 	{
-		
+		for (int i = 0; i < preLayer.length; i++)
+		{
+			float [] w = preLayer[i].getWeight();
+			for(int j = 0; j < w.length; j++)
+			{
+				curNode.setOutput(sigActivate(preLayer[i].getActivation()*w[j] + bias));
+			}
+		}
+	}
+	
+	// calcAct used by first hidden layer 
+	private void calcAct(INode[] preLayer, HNode curNode)
+	{
+		for (int i = 0; i < preLayer.length; i++)
+		{
+			float [] w = preLayer[i].getWeight();
+			for(int j = 0; j < w.length; j++)
+			{
+				curNode.setActivation(sigActivate(preLayer[i].getInput()*w[j] + bias));
+			}
+		}
 	}
 	
 	int getINodes()
@@ -130,14 +213,13 @@ public class Network
 		System.out.println("Input Nodes");
 		for(int i = 0; i < inputN.length; i++)
 		{
-			System.out.print("Node" + i + ": input= " + inputN[i].getInput() + " ");
+			System.out.print("N" + i + ": input= " + inputN[i].getInput() + " ");
 		}
 		
 		System.out.println("Output Nodes");
 		for(int i = 0; i < outputN.length; i++)
 		{
-			System.out.print("O" + i + ": " + "bias= " + outputN[i].getBias() +
-				"output= " + outputN[i].getOutput() + " ");
+			System.out.print("O" + i + ": " + "output= " + outputN[i].getOutput() + " ");
 		}
 	}
 	

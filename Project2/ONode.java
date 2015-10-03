@@ -3,27 +3,6 @@ import java.util.Random;
 public class ONode 
 {
 	private float output;
-<<<<<<< HEAD
-	
-		/**
-	 *	An activation function using a sigmoid function. 
-	 *
-	 */
-	public float sigActivate(){
-		float e = (float) Math.E;
-        float t = (float) Math.pow(e, -output);
-        float activate = 1 / (1 + t);
-		return activate;
-	}
-	
-	/**
-	 *  An activation function using a hyperbolic tangent.
-	 */
-	public float tanhActivate(){
-        float activate = (float) Math.tanh(output);
-        return activate;
-    }
-=======
 	private float bias;
 	
 	Random randomN = new Random();
@@ -58,5 +37,4 @@ public class ONode
 	{
 		
 	}
->>>>>>> James_Branch
 }
