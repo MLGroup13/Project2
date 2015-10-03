@@ -13,8 +13,6 @@ public class INode
 		input = in;
 	}
 	
-	
-	
 	// initialize the weights to a random real between 0.0 and 1.0
 	public void initWeight(int w)
 	{
