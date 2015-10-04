@@ -10,8 +10,7 @@ public class SampleGenerator {
 		int sample_size = 0;
 		int dimension = 0;
 		
-		PrintWriter writer = new PrintWriter(new FileWriter("randomDist.txt"));
-		PrintWriter writer2 = new PrintWriter(new FileWriter("normalizedDist.txt"));
+		
 		// create Scanner instance input prompt user for arguments 
 		Scanner input = new Scanner(System.in);
 		
@@ -22,6 +21,9 @@ public class SampleGenerator {
 		// prompt user for dimension for Rosenbrock function 
 		System.out.println("Dimension of Rosenbrock function");
 		dimension = input.nextInt();
+		
+		PrintWriter writer = new PrintWriter(new FileWriter("randomDist" + "s" + sample_size + "d" + dimension + ".txt"));
+		PrintWriter writer2 = new PrintWriter(new FileWriter("normalizedDist" + "s" + sample_size + "d" + dimension + ".txt"));
 		
 		RandomDist distribution = new RandomDist(sample_size, dimension);
 		distribution.printDist();

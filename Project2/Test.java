@@ -11,6 +11,13 @@ public class Test {
 		System.out.println("# of input nodes?");
 		iNodes = input.nextInt();
 		
+		float[] inputVector = new float[iNodes];
+		for (int i = 0; i < iNodes; i++)
+		{
+			System.out.print("enter vector" + i);
+			inputVector[i] = input.nextFloat();
+		}
+		
 		int hLayers;
 		int [] hNodes = new int[2];
 		System.out.println("# of hidden layers?");
@@ -25,15 +32,15 @@ public class Test {
 		System.out.println("# of output nodes");
 		oNodes = input.nextInt();
 		
-		float[] inputVector = new float[iNodes];
-		for (int i = 0; i < iNodes; i++)
+		float[] outputVector = new float[oNodes];
+		for (int i = 0; i < oNodes; i++)
 		{
 			System.out.print("enter vector" + i);
-			inputVector[i] = input.nextFloat();
+			outputVector[i] = input.nextFloat();
 		}
 		
 		// code to setup a a new Network 
-		Network network = new Network(iNodes, hLayers, hNodes, inputVector, oNodes);
+		Network network = new Network(iNodes, hLayers, hNodes, inputVector, outputVector, oNodes);
 		network.setupNetwork();
 		network.printNetwork();
 		
