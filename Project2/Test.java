@@ -64,6 +64,7 @@ public class Test {
 		
 		Network networkLearn = network;
 		PerceptronLearning percept = new PerceptronLearning(examples, networkLearn);
+		percept.printExamples();
 		
 		input.close();
 	}
