@@ -22,7 +22,7 @@ public class HNode
 			for(int i = 0; i < w; i++)
 			{
 				weight[i] = randomN.nextFloat();
-				System.out.print("w" + i + "=" + weight[i]);
+				//System.out.print("w" + i + "=" + weight[i]);
 			}
 		}
 		

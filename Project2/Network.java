@@ -4,6 +4,7 @@ public class Network
 {	
 	
 	private float[] inputVector;
+	private float[] outputVector;
 	private INode[] inputN;
 	private int HLayers;
 	private HNode[] layer1, layer2;
@@ -11,11 +12,12 @@ public class Network
 	private float bias = 1;
 	//private RandomDist ranDist;
 	
-	public Network(int in, int hLayers, int [] hNodes, float[] inv, int out)
+	public Network(int in, int hLayers, int [] hNodes, float[] inv, float[] outv, int out)
 	{
 		inputN = new INode[in];
 		HLayers = hLayers;
 		inputVector = inv;
+		outputVector = outv; 
 		outputN = new ONode[out];
 		if (hLayers == 1)
 		{
@@ -23,11 +25,124 @@ public class Network
 		}
 		else if (hLayers == 2)
 		{
+			layer1 = new HNode[hNodes[0]];
 			layer2 = new HNode[hNodes[1]];
 		}
 	}
 	
-
+	public void setupNetwork()
+	{
+		setupInputNodes();
+		if (HLayers > 0)
+		{
+			setupHiddenNodes();
+		}
+		setupOutputNodes();
+	}
+	
+	private void setupInputNodes()
+	{
+		/* if there are no hidden nodes the number of weights 
+		of each input node is equal to the number of outputs */
+		if (HLayers == 0)
+		{
+			for(int i = 0; i < inputN.length; i++)
+			{
+				inputN[i] = new INode(inputVector[i]);
+				inputN[i].initWeight(outputN.length);
+			}
+		}
+		
+		/* if there are hidden nodes the number of weights
+		of each input node is equal to the number of hidden 
+		nodes in the first hidden layer */
+		else if (HLayers > 0)
+		{
+			for(int i = 0; i < inputN.length; i++)
+			{
+				inputN[i] = new INode(inputVector[i]);
+				inputN[i].initWeight(layer1.length);
+			}
+		}
+	}
+	
+	private void setupHiddenNodes()
+	{
+		for (int i = 0; i < HLayers; i++)
+		{
+			// if on the first hidden layer
+			if(i == 0)
+			{
+				for (int j = 0; j < layer1.length; j++)
+				{
+					/* if there is a single hidden layer the number of weights
+					of each node in the first hidden layer is equal to the 
+					number of outputs */
+					if (HLayers == 1)
+					{
+						layer1[j] = new HNode();
+						layer1[j].initWeight(outputN.length);
+						calcAct(inputN, layer1[j]);
+					}
+					
+					/* if there is two hidden layers the number of weights
+					of each node in the first hidden layer is equal to the
+					number of nodes in the second hidden layer*/
+					else if (HLayers == 2)
+					{
+						layer1[j] = new HNode();
+						layer1[j].initWeight(layer2.length);
+						calcAct(inputN, layer1[j]);
+					}
+				}
+			}
+			
+			// if on the second hidden layer
+			if(i == 1)
+			{
+				for(int j = 0; j < layer2.length; j++)
+				{
+					layer2[j] = new HNode();
+					layer2[j].initWeight(outputN.length);
+					calcAct(layer1, layer2[j]);
+				}
+			}
+		}
+	}
+	
+	private void setupOutputNodes()
+	{
+		// case for neural net with no hidden layers
+		if (HLayers == 0)
+		{
+			for(int i = 0; i < outputN.length; i++)
+			{
+				outputN[i] = new ONode();
+				calcAct(inputN, outputN[i]);
+			}
+		}
+		
+		// case for neural net with a single layer
+		else if (HLayers == 1)
+		{
+			for(int i = 0; i < outputN.length; i++)
+			{
+				outputN[i] = new ONode();
+				calcAct(layer1, outputN[i]);
+			}
+		}
+		
+		// case for neural net with two hidden layers
+		else if (HLayers == 2)
+		{
+			for(int i = 0; i < outputN.length; i++)
+			{
+				outputN[i] = new ONode();
+				calcAct(layer2, outputN[i]);
+			}
+		}
+	}
+	
 	/** Shane wrote original, James adjusted input parameter 
 	 *	An activation function using a sigmoid function. 
 	 *
@@ -71,94 +186,6 @@ public class Network
 		return err;
 	}
 	
-	public void setupNetwork()
-	{
-		setupInputNodes();
-		if (HLayers > 0)
-		{
-			setupHiddenNodes();
-		}
-		setupOutputNodes();
-	}
-	
-	private void setupInputNodes()
-	{
-		/* if there are no hidden nodes the number of weights 
-		of each input node is equal to the number of outputs */
-		if (HLayers == 0)
-		{
-			for(int i = 0; i < inputN.length; i++)
-			{
-				inputN[i] = new INode(inputVector[i]);
-				inputN[i].initWeight(outputN.length);
-			}
-		}
-		
-		/* if there are hidden nodes the number of weights
-		of each input node is equal to the number of hidden 
-		nodes in the first hidden layer */
-		else if (HLayers > 0)
-		{
-			for(int i = 0; i < inputN.length; i++)
-			{
-				inputN[i] = new INode(inputVector[i]);
-				inputN[i].initWeight(layer1.length);
-			}
-		}
-	}
-	
-	private void setupHiddenNodes()
-	{
-		for (int i = 0; i < HLayers; i++)
-		{
-			// if the first hidden layer is selected
-			if(i == 0)
-			{
-				for (int j = 0; j < layer1.length; j++)
-				{
-					/* if there is a single hidden layer the number of weights
-					of each hidden node in the first hidden layer is equal to
-					the number of outputs */
-					if (HLayers == 1)
-					{
-						layer1[j] = new HNode();
-						layer1[j].initWeight(outputN.length);
-						calcAct(inputN, layer1[j]);
-					}
-				}
-			}
-		}
-	}
-	
-	private void setupOutputNodes()
-	{
-		// case for neural net with no hidden layers
-		if (HLayers == 0)
-		{
-			for(int i = 0; i < outputN.length; i++)
-			{
-				outputN[i] = new ONode();
-				calcAct(inputN, outputN[i]);
-			}
-		}
-		
-		// case for neural net with a single layer
-		else if (HLayers == 1)
-		{
-			for(int i = 0; i < outputN.length; i++)
-			{
-				outputN[i] = new ONode();
-				calcAct(layer1, outputN[i]);
-			}
-		}
-		
-		// case for neural net with two hidden layers
-		else if (HLayers == 2)
-		{
-			
-		}
-	}
-	
 	// calcAct used by output nodes when there are no hidden layers
 	private void calcAct(INode[] preLayer, ONode curNode)
 	{
@@ -198,6 +225,19 @@ public class Network
 		}
 	}
 	
+	// calcAct used by the second hidden layer 
+		private void calcAct(HNode[] preLayer, HNode curNode)
+		{
+			for (int i = 0; i < preLayer.length; i++)
+			{
+				float [] w = preLayer[i].getWeight();
+				for(int j = 0; j < w.length; j++)
+				{
+					curNode.setActivation(sigActivate(preLayer[i].getActivation()*w[j] + bias));
+				}
+			}
+		}
+	
 	int getINodes()
 	{
 		return inputN.length;
@@ -219,8 +259,11 @@ public class Network
 		System.out.println("Output Nodes");
 		for(int i = 0; i < outputN.length; i++)
 		{
-			System.out.print("O" + i + ": " + "output= " + outputN[i].getOutput() + " ");
+			System.out.println("O" + i + ": " + "output= " + outputN[i].getOutput() + " ");
+			System.out.println("Actual Output= " + outputVector[i]);
+			System.out.println("Error: " + sqError(outputN[i].getOutput(), outputVector[i]) );
 		}
+		
 	}
 	
 	
