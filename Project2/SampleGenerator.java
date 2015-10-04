@@ -1,12 +1,17 @@
 import java.util.Scanner;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 public class SampleGenerator {
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws Exception
 	{
 		int sample_size = 0;
 		int dimension = 0;
 		
+		PrintWriter writer = new PrintWriter(new FileWriter("randomDist.txt"));
+		PrintWriter writer2 = new PrintWriter(new FileWriter("normalizedDist.txt"));
 		// create Scanner instance input prompt user for arguments 
 		Scanner input = new Scanner(System.in);
 		
@@ -21,6 +26,26 @@ public class SampleGenerator {
 		RandomDist distribution = new RandomDist(sample_size, dimension);
 		distribution.printDist();
 		
+		float[][] output = distribution.getRanDist();
+		
+		for (int i = 0; i < output.length; i++)
+		{
+			for (int j = 0; j < dimension+1; j++)
+			{
+				writer.print(output[i][j] + ",");
+			}
+			writer.println();
+		}
+		
+		float[][] normalize = distribution.Normalize();
+		for(int k = 0; k < normalize.length; k++){
+			for(int l = 0; l < dimension+1; l++){
+				writer2.print(normalize[k][l] + ",");
+			}
+			writer2.println();
+		}
+		writer.close();
+		writer2.close();
 		input.close();
 	}
 
