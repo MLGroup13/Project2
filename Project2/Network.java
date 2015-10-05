@@ -262,6 +262,12 @@ public class Network
 		return outputN;
 	}
 	
+	// method to get output
+	public float getOutput()
+	{
+		return outputN[0].getOutput();
+	}
+	
 	void printNetwork()
 	{
 		System.out.println("Input Nodes");
