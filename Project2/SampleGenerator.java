@@ -39,7 +39,7 @@ public class SampleGenerator {
 			writer.println();
 		}
 		
-		float[][] normalize = distribution.Normalize();
+		float[][] normalize = distribution.minMax();
 		for(int k = 0; k < normalize.length; k++){
 			for(int l = 0; l < dimension+1; l++){
 				writer2.print(normalize[k][l] + ",");
