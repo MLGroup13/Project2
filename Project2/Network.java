@@ -238,14 +238,34 @@ public class Network
 			}
 		}
 	
-	int getINodes()
+	// method to get input nodes
+	public INode[] getINodes()
 	{
-		return inputN.length;
+		return inputN;
 	}
 	
-	int getONodes()
+	// method to get hidden layer 1 nodes
+	public HNode[] getL1HNodes()
 	{
-		return outputN.length;
+		return layer1;
+	}
+	
+	// method to get hidden layer 2 nodes
+	public HNode[] getL2HNodes()
+	{
+		return layer2;
+	}
+	
+	// method to get output nodes
+	public ONode[] getONodes()
+	{
+		return outputN;
+	}
+	
+	// method to get output
+	public float getOutput()
+	{
+		return outputN[0].getOutput();
 	}
 	
 	void printNetwork()

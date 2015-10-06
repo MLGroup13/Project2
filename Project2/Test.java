@@ -4,6 +4,10 @@ public class Test {
 
 	public static void main(String[] args) 
 	{
+		/* FIRST STAGE initializes a network with random weights
+		 * and just uses the first line of the data set 
+		 */
+		
 		// create Scanner instance input prompt user for arguments 
 		Scanner input = new Scanner(System.in);
 		
@@ -45,6 +49,44 @@ public class Test {
 		network.printNetwork();
 		
 		
+		/* LEARNING PHASE which uses training examples 
+		 */
+		
+		// prompt for number of examples for training 
+		int example;
+		System.out.println("How many examples for learning?");
+		example = input.nextInt();
+		
+		float [][] examples = new float[example][iNodes+1];
+		for(int i = 0; i < example; i++)
+		{
+			System.out.println("Example" + i);
+			for (int j = 0; j < iNodes; j++)
+			{
+				System.out.print("input" + j);
+				examples[i][j] = input.nextFloat();
+			}
+			System.out.print("Output" + i);
+			examples[i][iNodes] = input.nextFloat();
+		}
+		
+		Network networkLearn = network;
+		
+		float goalError;
+		System.out.println("Enter Error used by Learning Algorithm");
+		goalError = input.nextFloat(); 
+		
+		PerceptronLearning percept = new PerceptronLearning(examples, networkLearn, goalError);
+		percept.printExamples();
+		
+		float learn_rate;
+		System.out.println("Enter Learning Rate");
+		learn_rate = input.nextFloat();
+		
+		percept.Learn(learn_rate);
+		
+		/* TESTING PHASE which tests the accuracy of the approximation 
+		 */
 		
 		input.close();
 	}
