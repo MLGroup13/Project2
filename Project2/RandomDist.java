@@ -18,6 +18,44 @@ public class RandomDist
 		return ranDist;
 	}
 	
+	float[][] minMax(){
+		float[][] minmax = null;
+		minmax = ranDist;
+		float minimum = minimum();
+		float maximum = maximum();
+		for(int i = 0; i < ranDist.length; i++){
+			for(int j = 0; j <= dimension; j++){
+				minmax[i][j] = (ranDist[i][j] - minimum) / (maximum - minimum);
+			}
+		}
+		return minmax;
+	}
+	
+	float minimum(){
+		float mini = 1000000000;
+		for(int i = 0; i < ranDist.length; i++){
+			for(int j = 0; j <= dimension; j++){
+				if(mini > ranDist[i][j]){
+					mini = ranDist[i][j];
+				}
+			}
+		}
+		return mini;
+	}
+	
+	float maximum(){
+		float max = 0;
+		for(int i = 0; i < ranDist.length; i++){
+			for(int j = 0; j <= dimension; j++){
+				if(max < ranDist[i][j]){
+					max = ranDist[i][j];
+				}
+			}
+		}
+		return max;
+	}
+	
+	
 	//Z score of ranDist
 	float[][] Normalize(){
 		float[][] Zscore = null;
