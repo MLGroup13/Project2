@@ -40,6 +40,20 @@ public class Network
 		setupOutputNodes();
 	}
 	
+	public void runNetwork(float[] inv, float[] outv)
+	{
+		// set output vector 
+		outputVector = outv;
+		
+		// send new input into input nodes
+		setInput(inv);
+		if (HLayers > 0)
+		{
+			updateHiddenNodes();
+		}
+		updateOutputNodes();
+	}
+	
 	private void setupInputNodes()
 	{
 		/* if there are no hidden nodes the number of weights 
@@ -110,6 +124,45 @@ public class Network
 		}
 	}
 	
+	// method to update hidden nodes
+	private void updateHiddenNodes()
+	{
+		for (int i = 0; i < HLayers; i++)
+		{
+			// if on the first hidden layer
+			if(i == 0)
+			{
+				for (int j = 0; j < layer1.length; j++)
+				{
+					/* if there is a single hidden layer the number of weights
+					of each node in the first hidden layer is equal to the 
+					number of outputs */
+					if (HLayers == 1)
+					{
+						calcAct(inputN, layer1[j]);
+					}
+					
+					/* if there is two hidden layers the number of weights
+					of each node in the first hidden layer is equal to the
+					number of nodes in the second hidden layer*/
+					else if (HLayers == 2)
+					{
+						calcAct(inputN, layer1[j]);
+					}
+				}
+			}
+			
+			// if on the second hidden layer
+			if(i == 1)
+			{
+				for(int j = 0; j < layer2.length; j++)
+				{
+					calcAct(layer1, layer2[j]);
+				}
+			}
+		}
+	}
+	
 	private void setupOutputNodes()
 	{
 		// case for neural net with no hidden layers
@@ -141,6 +194,37 @@ public class Network
 				calcAct(layer2, outputN[i]);
 			}
 		}
+	}
+	
+	// method to update output nodes
+	public void updateOutputNodes()
+	{
+		// case for neural net with no hidden layers
+				if (HLayers == 0)
+				{
+					for(int i = 0; i < outputN.length; i++)
+					{
+						calcAct(inputN, outputN[i]);
+					}
+				}
+				
+				// case for neural net with a single layer
+				else if (HLayers == 1)
+				{
+					for(int i = 0; i < outputN.length; i++)
+					{
+						calcAct(layer1, outputN[i]);
+					}
+				}
+				
+				// case for neural net with two hidden layers
+				else if (HLayers == 2)
+				{
+					for(int i = 0; i < outputN.length; i++)
+					{
+						calcAct(layer2, outputN[i]);
+					}
+				}
 	}
 	
 	/** Shane wrote original, James adjusted input parameter 
@@ -181,7 +265,7 @@ public class Network
 	public float sqError(float o, float y)
 	{
 		float err;
-		err = (float) (0.5f*(y - Math.pow(o, 2)));
+		err = (float) (0.5f*Math.pow((y - o), 2));
 		
 		return err;
 	}
@@ -242,6 +326,21 @@ public class Network
 	public INode[] getINodes()
 	{
 		return inputN;
+	}
+	
+	// method to set input node values
+	public void setInput(float [] inv)
+	{
+		for (int i = 0; i < inputN.length; i++)
+		{
+			inputN[i].setInput(inv[i]);
+		}
+	}
+	
+	// method to set input weights
+	public void setWeights(INode input, float[] w)
+	{
+		input.setWeight(w);
 	}
 	
 	// method to get hidden layer 1 nodes

@@ -4,9 +4,10 @@ public class Test {
 
 	public static void main(String[] args) 
 	{
-		/* FIRST STAGE initializes a network with random weights
+		/* FIRST PHASE initializes a network with random weights
 		 * and just uses the first line of the data set 
 		 */
+		System.out.println("INITIALIZATION PHASE");
 		
 		// create Scanner instance input prompt user for arguments 
 		Scanner input = new Scanner(System.in);
@@ -51,6 +52,7 @@ public class Test {
 		
 		/* LEARNING PHASE which uses training examples 
 		 */
+		System.out.println("LEARNING PHASE");
 		
 		// prompt for number of examples for training 
 		int example;
@@ -83,10 +85,49 @@ public class Test {
 		System.out.println("Enter Learning Rate");
 		learn_rate = input.nextFloat();
 		
-		percept.Learn(learn_rate);
+		int epochs = 0;
+		do
+		{
+			System.out.println("Epoch" + epochs);
+			networkLearn = percept.Learn(learn_rate);
+		
+			for (int i = 0; i < example; i++)
+			{
+				float inputV[] = new float [examples[i].length-1];
+				float outputV[] = new float [oNodes];
+				
+				for (int j = 0; j < inputV.length; j++)
+				{
+					inputV[j] = examples[i][j];
+				}
+				outputV[0] = examples[i][iNodes];
+			
+				networkLearn.runNetwork(inputV, outputV);
+				networkLearn.printNetwork();
+			}
+			
+			epochs++;
+		}	while(epochs < 5);
 		
 		/* TESTING PHASE which tests the accuracy of the approximation 
 		 */
+		System.out.println("TESTING PHASE");
+		
+		
+		System.out.println("Enter test Data for " + (iNodes+1) + "D Rosenbrock");
+		for (int i = 0; i < iNodes; i++)
+		{
+			System.out.print("vector" + i);
+			inputVector[i] = input.nextFloat();
+		}
+		
+		System.out.println("Output");
+		outputVector[0] = input.nextFloat();
+		
+		
+			networkLearn.runNetwork(inputVector, outputVector);
+			networkLearn.printNetwork();
+			
 		
 		input.close();
 	}

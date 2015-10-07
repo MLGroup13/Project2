@@ -31,6 +31,11 @@ public class HNode
 			return weight;
 		}
 		
+		public void setWeight(float[] w)
+		{
+			weight = w;
+		}
+		
 		public float getActivation()
 		{
 			return activation;
