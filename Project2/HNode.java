@@ -21,7 +21,7 @@ public class HNode
 			
 			for(int i = 0; i < w; i++)
 			{
-				weight[i] = randomN.nextFloat();
+				weight[i] = randomN.nextFloat() - randomN.nextFloat();
 				//System.out.print("w" + i + "=" + weight[i]);
 			}
 		}
@@ -29,6 +29,11 @@ public class HNode
 		public float[] getWeight()
 		{
 			return weight;
+		}
+		
+		public void setWeight(float[] w)
+		{
+			weight = w;
 		}
 		
 		public float getActivation()

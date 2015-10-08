@@ -21,7 +21,7 @@ public class RandomDist
 	float[][] minMax(){
 		float[][] minmax = null;
 		minmax = ranDist;
-		float minimum = minimum();
+		float minimum = 0;
 		float maximum = maximum();
 		for(int i = 0; i < ranDist.length; i++){
 			for(int j = 0; j <= dimension; j++){
@@ -107,9 +107,13 @@ public class RandomDist
 			{
 				ranDist[i][j] =  (randomN.nextFloat() - randomN.nextFloat())*3.0f;
 			}
-			ranDist[i][dimension] = (float)  (Math.pow((1 - ranDist[i][0]), 2) + 
-					100*(Math.pow((ranDist[i][1] - Math.pow(ranDist[i][0], 2) ), 2) )
-					);
+			float sum = 0;
+			for (int j = 0; j < dimension; j++)
+			{
+				sum = sum + Rosenbrock(ranDist[i][j], ranDist[i][j+1]);
+			}
+			ranDist[i][dimension] = sum;
+			
 		}
 		
 		return ranDist;
@@ -129,11 +133,12 @@ public class RandomDist
 	}
 	
 	
-	//calculate output for Rosenbrock function which takes in dimension and a vector x of inputs 
-	public float Rosenbrock(int n, float [] x)
+	//calculate output for Rosenbrock function which takes calculate one part of sum
+	public float Rosenbrock(float left, float right)
 	{
-		float output = 0;
-		
+		float output = (float)  (Math.pow((1 - left), 2) + 
+				100*(Math.pow((right - Math.pow(left, 2) ), 2) )
+				);
 		return output;
 	}
 }

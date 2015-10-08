@@ -20,8 +20,8 @@ public class INode
 		
 		for(int i = 0; i < w; i++)
 		{
-			weight[i] = randomN.nextFloat();
-			//System.out.print("w" + i + "=" + weight[i]);
+			weight[i] = randomN.nextFloat() - randomN.nextFloat();
+			System.out.print("w" + i + "=" + weight[i]);
 		}
 	}
 	
@@ -30,8 +30,22 @@ public class INode
 		return weight;
 	}
 	
+	public void setWeight(float[] w)
+	{
+		weight = w;
+		for(int i = 0; i < w.length; i++)
+		{
+			System.out.print("w" + i + "=" + weight[i]);
+		}
+	}
+	
 	public float getInput()
 	{
 		return input;
+	}
+	
+	public void setInput(float in)
+	{
+		input = in;
 	}
 }
