@@ -1,7 +1,12 @@
-import java.util.Random;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
-public class Network 
+public class Network
 {	
+	PrintWriter write = new PrintWriter("errors.txt");
+	PrintWriter averageOut = new PrintWriter("averages.txt");
+	ArrayList averages = new ArrayList();
 	
 	private float[] inputVector;
 	private float[] outputVector;
@@ -10,9 +15,8 @@ public class Network
 	private HNode[] layer1, layer2;
 	private ONode[] outputN;
 	private float bias = 1;
-	//private RandomDist ranDist;
 	
-	public Network(int in, int hLayers, int [] hNodes, float[] inv, float[] outv, int out)
+	public Network(int in, int hLayers, int [] hNodes, float[] inv, float[] outv, int out) throws FileNotFoundException
 	{
 		inputN = new INode[in];
 		HLayers = hLayers;
@@ -372,9 +376,11 @@ public class Network
 		return outputN[0].getOutput();
 	}
 	
-	void printNetwork()
+	
+	void printNetwork() throws FileNotFoundException
 	{
 		System.out.println("Input Nodes");
+		
 		for(int i = 0; i < inputN.length; i++)
 		{
 			System.out.print("N" + i + ": input= " + inputN[i].getInput() + " ");
@@ -387,9 +393,28 @@ public class Network
 			System.out.println("Actual Output= " + outputVector[i]);
 			float err = outputVector[i] - outputN[i].getOutput();
 			System.out.println("Error: " +  err );
+			write.print(err + ",");
+			averages.add(err);
 		}
-		
+		write.println();
 	}
 	
+	void WriteClose(){
+		write.close();
+	}
+	void averageClose(){
+		averageOut.close();
+	}
+	
+	void overallAverage(){
+		float temp = 0;
+		float average = 0;
+		for(int i = 0; i < averages.size(); i++){
+			temp = (float) averages.get(i);
+			average += temp;
+		}
+		average = average / averages.size();
+		averageOut.println("the average is " + average);
+	}
 	
 }

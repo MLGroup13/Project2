@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Test {
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws Exception
 	{
 		/* FIRST PHASE initializes a network with random weights
 		 * and just uses the first line of the data set 

@@ -119,6 +119,7 @@ public class TestWithDatasets
 			
 				networkLearn.runNetwork(inputV, outputV);
 				networkLearn.printNetwork();
+				networkLearn.overallAverage();
 			}
 			
 			epochs++;
@@ -132,7 +133,8 @@ public class TestWithDatasets
 
 		networkLearn.runNetwork(inputVector, outputVector);
 		networkLearn.printNetwork();
-
+		networkLearn.WriteClose();
+		networkLearn.averageClose();
 		in.close();
 		input.close();
 	}
