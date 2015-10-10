@@ -9,13 +9,13 @@ public class PerceptronLearning
 	{
 		network = net;
 		examples = ex;
+		inputN = network.getINodes();
 	}
 	
 	public Network Learn(float learn_rate)
 	{
 		for (int i = 0; i < examples.length; i++)
-		{
-			inputN = network.getINodes();
+		{	
 			for (int j = 0; j < examples[i].length-1; j++)
 			{
 				float[] w = inputN[j].getWeight();
@@ -33,6 +33,7 @@ public class PerceptronLearning
 		return network;
 	}
 	
+	// sigmoid activation function 
 	public float sigActivate(float x){
 		float e = (float) Math.E;
         float t = (float) Math.pow(e, -x);
@@ -45,7 +46,7 @@ public class PerceptronLearning
 	{
 		float e = (float) Math.E;
 		float numerator = (float) Math.pow(e, x);
-		float denomenator = (float) Math.pow(1 + Math.pow(e, x), 2);
+		float denomenator = (float) Math.pow((1 + Math.pow(e, x)), 2);
 		return numerator / denomenator;
 	}
 	

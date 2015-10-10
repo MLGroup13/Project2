@@ -343,6 +343,11 @@ public class Network
 		input.setWeight(w);
 	}
 	
+	public int getHLayers()
+	{
+		return HLayers;
+	}
+	
 	// method to get hidden layer 1 nodes
 	public HNode[] getL1HNodes()
 	{
@@ -380,7 +385,8 @@ public class Network
 		{
 			System.out.println("O" + i + ": " + "output= " + outputN[i].getOutput() + " ");
 			System.out.println("Actual Output= " + outputVector[i]);
-			System.out.println("Error: " + sqError(outputN[i].getOutput(), outputVector[i]) );
+			float err = outputVector[i] - outputN[i].getOutput();
+			System.out.println("Error: " +  err );
 		}
 		
 	}

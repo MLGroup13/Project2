@@ -20,7 +20,7 @@ public class INode
 		
 		for(int i = 0; i < w; i++)
 		{
-			weight[i] = randomN.nextFloat();
+			weight[i] = randomN.nextFloat() - randomN.nextFloat();
 			System.out.print("w" + i + "=" + weight[i]);
 		}
 	}
