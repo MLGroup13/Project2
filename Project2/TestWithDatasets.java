@@ -62,11 +62,13 @@ public class TestWithDatasets
 		//Setup a new network
 		Network network = new Network(iNodes, hLayers, hNodes, inputVector, outputVector, oNodes);
 		network.setupNetwork();
-		network.printNetwork();
+		//network.printNetwork();
 		
 		/*
 		 * Learning phase which uses training examples
 		 */
+		
+		//Do not use all examples. The examples for learning and testing come from the same text file.
 		System.out.println("How many examples are for learning?");
 		int example;
 		example = input.nextInt();
@@ -78,21 +80,15 @@ public class TestWithDatasets
 		String temp;
 		String line;
 
+		//Read lines from specially designed .txt file
 		while((line = in.readLine()) != null && position < example){
+			temp = line;
+			current = temp.split(",");
 			for(int i = 0; i < iNodes; i++){
-				temp = line;
-				current = temp.split(",");	
 				examples[position][i] = Float.parseFloat(current[i]);
 			}
 			float sum = 0;
-			for(int j = 0; j < 2; j++){
-				float x = examples[position][j];
-				float y = examples[position][j+1];
-				float output = (float)  (Math.pow((1 - x), 2) + 
-						100*(Math.pow((y - Math.pow(x, 2) ), 2) )
-						);	
-				sum += output;			
-			}
+			sum = Float.parseFloat(current[iNodes]);
 			examples[position][iNodes] = sum;
 			position++;
 		}		
@@ -116,6 +112,7 @@ public class TestWithDatasets
 		System.out.println("Enter Learning Rate");
 		learn_rate = input.nextFloat();
 		
+		//Begin Learning Process
 		int epochs = 0;
 		do
 		{
@@ -134,8 +131,6 @@ public class TestWithDatasets
 				outputV[0] = examples[i][iNodes];
 			
 				networkLearn.runNetwork(inputV, outputV);
-				networkLearn.printNetwork();
-				networkLearn.overallAverage();
 			}
 			
 			epochs++;
@@ -144,14 +139,24 @@ public class TestWithDatasets
 		/*
 		 * TESTING PHASE which tests the accuracy of the approximation
 		 */
+		//Use the remaining number of examples in the .txt file to test data
 		System.out.println("TESTING PHASE");
+		System.out.println("How many tests?");
+		int tests = input.nextInt();
 		
-		for(int i = 0; i < iNodes; i++){	
-			inputVector[i] = Float.parseFloat(current[i]);
-		}
-
-		networkLearn.runNetwork(inputVector, outputVector);
-		networkLearn.printNetwork();
+		position = 0;
+		while((line = in.readLine()) != null && position < tests){
+			temp = line;
+			current = temp.split(",");
+			for(int i = 0; i < iNodes; i++){
+				inputVector[i] = Float.parseFloat(current[i]);
+			}
+			outputVector[0] = Float.parseFloat(current[iNodes]);
+			position++;
+			networkLearn.runNetwork(inputVector, outputVector);			
+			networkLearn.printNetwork();
+			networkLearn.overallAverage();
+		}		
 		
 		networkLearn.WriteClose();
 		networkLearn.averageClose();
