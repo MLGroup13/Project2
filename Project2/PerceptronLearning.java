@@ -56,7 +56,7 @@ public class PerceptronLearning
 		{
 			for(int j = 0; j < examples[i].length; j++)
 			{
-				System.out.print(examples[i][j]);
+				System.out.print(examples[i][j] + ",");
 			}
 			System.out.println();
 		}

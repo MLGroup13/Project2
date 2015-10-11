@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 
 public class TestWithDatasets 
 {
@@ -17,7 +16,11 @@ public class TestWithDatasets
 		System.out.println(fileName);
 		File file = new File(fileName);
 		BufferedReader in = new BufferedReader(new FileReader(file));
-
+		
+		/**
+		 * Initialize Phase
+		 * Initialize all nodes before testing
+		 */
 		//Input number of input nodes
 		int iNodes;
 		System.out.println("# of input nodes?");
@@ -61,13 +64,14 @@ public class TestWithDatasets
 		network.setupNetwork();
 		network.printNetwork();
 		
-		//Learning phase
-		//First stage was not training
+		/*
+		 * Learning phase which uses training examples
+		 */
 		System.out.println("How many examples are for learning?");
 		int example;
 		example = input.nextInt();
 		
-		//instantiate some new variables
+		//instantiate some new variables used to extract data from .txt file
 		float [][] examples = new float[example][iNodes+1];
 		String[] current = new String[iNodes];
 		int position = 0;
@@ -80,8 +84,20 @@ public class TestWithDatasets
 				current = temp.split(",");	
 				examples[position][i] = Float.parseFloat(current[i]);
 			}
+			float sum = 0;
+			for(int j = 0; j < 2; j++){
+				float x = examples[position][j];
+				float y = examples[position][j+1];
+				float output = (float)  (Math.pow((1 - x), 2) + 
+						100*(Math.pow((y - Math.pow(x, 2) ), 2) )
+						);	
+				sum += output;			
+			}
+			examples[position][iNodes] = sum;
 			position++;
 		}		
+		
+		
 		
 		//create a network to learn from original network
 		Network networkLearn = network;
@@ -125,7 +141,10 @@ public class TestWithDatasets
 			epochs++;
 		}	while(epochs < 5);
 		
-		System.out.println("Testing Phase");
+		/*
+		 * TESTING PHASE which tests the accuracy of the approximation
+		 */
+		System.out.println("TESTING PHASE");
 		
 		for(int i = 0; i < iNodes; i++){	
 			inputVector[i] = Float.parseFloat(current[i]);
@@ -133,14 +152,17 @@ public class TestWithDatasets
 
 		networkLearn.runNetwork(inputVector, outputVector);
 		networkLearn.printNetwork();
+		
 		networkLearn.WriteClose();
 		networkLearn.averageClose();
 		in.close();
 		input.close();
 	}
-	
 	private void ParseData(int samples, int dimension)
 	{
 		
 	}
+	
+	
+	
 }

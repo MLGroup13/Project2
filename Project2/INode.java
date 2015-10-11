@@ -35,7 +35,8 @@ public class INode
 		weight = w;
 		for(int i = 0; i < w.length; i++)
 		{
-			System.out.print("w" + i + "=" + weight[i]);
+			weight[i] = (float) weight[i];
+			System.out.print("w" + i + " = " + weight[i]);
 		}
 	}
 	
